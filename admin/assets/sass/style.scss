@@ -1,0 +1,160 @@
+/* Página de todos os modais */
+#all_modals{
+  width: 100%;
+  tbody{
+    tr{
+      background: #fff;
+      td, td.sorting_1{
+        text-align: center;
+        background: transparent;
+      }
+      td #remove-modal a{
+        color: #f00 !important;
+      }
+      span a{
+        text-decoration: none;
+        color: rgb(0,160,210);
+        background: transparent !important;
+      }
+      &:hover > td,&:hover > td span a{
+        background: rgba(0,0,0,0.1);
+        color: #000 !important;
+      }
+    }
+  }
+}
+
+/* Página de criação/edicão de modal */
+#callBack_admin_body{
+  padding: 15px;
+  background: #fff;
+  border-radius: 5px;
+  width: 95%;
+  margin-top: 10px;
+  overflow: auto;
+  height: auto;
+  h3{
+    margin-top: 15px;
+    border-bottom: dashed #47C5DA 3px;
+    padding-bottom: 15px;
+    width: 45%;
+    margin-bottom: 0px;
+  }
+  label{
+    font-weight: bold !important;
+  }
+  .input-error{
+    color: #f00;
+    border: solid #f00 1px;
+  }
+  .body-left{
+    margin-bottom: 25px;
+    height: auto;
+    overflow: auto;
+    p{
+      float: left;
+      margin-right: 25px;
+      input,select{
+        display: block;
+        width: 245px;
+      }
+    }
+    #input_time{
+      display: none;
+      opacity: 0;
+    }
+  }
+  #get_image{
+    color: #fff;
+    background: #47c5da;
+    border: none;
+    padding: 7px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 2px 0px 0px rgb(0, 0, 0);
+  }
+  .image-url{
+    width: 83%;
+    background: #d9d9d9;
+    color: #fff !important;
+    height: 29px;
+  }
+  .the_editor{
+    width: 100%;
+    position: relative;
+    height: auto;
+    overflow: auto;
+    #captacao_build{
+      display: none;
+      opacity: 0;
+      width: 93%;
+      height: auto;
+      overflow: none;
+      background: #ecf9fb;
+      padding: 15px;
+      position: relative;
+      margin-bottom: 15px;
+      border-radius: 11px;
+      .input_adds{
+        margin-top: 15px;
+        width: 80%;
+        th{
+          font-size: 14px;
+          text-transform: capitalize;
+          color: rgb(99,101,103);
+          margin-right: 30px;
+          text-align: left;
+        }
+        td{
+          border-bottom: solid rgb(99,101,103) 1px;
+          text-transform: capitalize;
+        }
+        .remove span{
+          color: #f00;
+          cursor: pointer;
+          &:hover{
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+    #cke_editor{
+      width: 95% !important;
+    }
+  }
+  #send_data{
+    color: #fff;
+    background: #47c5da;
+    border: none;
+    padding: 7px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0px 2px 0px 0px rgb(0, 0, 0);
+  }
+}
+
+/* jQuery UI Dialog */
+#dialog-form{
+  display: none;
+  overflow-x: hidden;
+  form{
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 15px;
+  }
+  input,select,button{
+    width: 90%;
+    margin-bottom: 20px;
+  }
+  input[type="submit"]{
+    border: none;
+    background: rgb(29,77,122);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0px 2px 0px 0px rgb(0, 0, 0);
+    border-radius: 5px;
+  }
+}
+/* jQueryUI End */

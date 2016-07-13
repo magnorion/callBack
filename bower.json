@@ -1,0 +1,23 @@
+{
+  "name": "callback",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "magnorion <lucas_front@yahoo.com.br>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "assets/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.4",
+    "font-awesome": "^4.6.3",
+    "jquery-ui": "^1.11.4"
+  }
+}
