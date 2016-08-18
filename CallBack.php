@@ -4,7 +4,7 @@
     * Description: Plugin para construção de modais.
     * Version: 1.0
     * Author: Magnorion
-    * Author Uri: https://github.com/magnorion/
+    * Author Uri: http://github.com/magnorion/
   */
 
   class CallBack{
@@ -20,7 +20,7 @@
         add_action("wp_footer",array($this,"ajaxurl"));
 
         ### Hook para carregar todos os arquivos
-        add_action("wp_enqueue_scripts",array($this,"plugin_assets"));
+        add_action("wp_footer",array($this,"plugin_assets"));
       }else{
         ### Monta o menu no admin
         add_action("admin_menu",array($this,"plugin_menu"));
@@ -49,14 +49,11 @@
     public function plugin_assets(){
       ### Diretório do plugin
       $dir = plugin_dir_url(__FILE__);
-
-      ### Plugins de Terceiros
-      wp_enqueue_script("jquery",$dir."admin/assets/vendor/jquery/dist/jquery.min.js"); ### jQuery Core
-      wp_enqueue_script("CallBack_jquery_mask",$dir,"assets/vendor/jquery-mask/jquery.mask.js"); ### Mask
-
+      wp_enqueue_script("jquery");
       ### Style e Script Core do plugin
       wp_enqueue_style("CallBack_Style",$dir."/assets/css/style.css");
-      wp_enqueue_script("CallBack_Script",$dir."/assets/js/script.min.js");
+
+      wp_enqueue_script("CallBack_Script",$dir."/assets/js/script.js");
 
       ### Livereload (Usado apenas em desenvolvimento!)
       wp_enqueue_script("livereload","http://localhost:460/livereload.js");
@@ -71,7 +68,7 @@
       wp_enqueue_media();
 
       ### Core do admin
-      wp_enqueue_script("admin-callBack-script",$dir."admin/assets/js/script.min.js");
+      wp_enqueue_script("admin-callBack-script",$dir."admin/assets/js/script.js");
       wp_enqueue_style("admin-callBack-style",$dir."admin/assets/css/style.css");
 
       ### Plugins de Terceiros

@@ -17,12 +17,12 @@
       "min-height": dados.altura,
       background:bg,
       "background-size": "cover",
-      marginLeft: center+"%"
+      "margin":"5% auto"
     });
     modal.find("#callBack_Body").append(dados.texto);
 
     // Gera os campos (se houver) ---
-    if(dados.campos != ""){
+    if(dados.campos != "" && typeof dados.campos != "undefined"){
       var breaker = dados.campos.split(" ");
       var builder = "";
       var form = modal.find("#callBack_form");
@@ -32,14 +32,16 @@
         var nome = cut[0];
         var tipo = cut[1];
 
-        if(tipo == "Texto"){
-          builder = "<p><label>"+nome+":</label><input type='text' name='"+nome+"' class='field-required' /></p>";
-        }else if(tipo == "Telefone"){
-          builder = "<p><label>"+nome+":</label><input type='text' name='"+nome+"' class='field-required tel-masked' /></p>";
-        }else if(tipo == "Mensagem"){
+       if(tipo == "Telefone" || tipo == "telefone"){
+          builder = "<p class='telefone'><label>"+nome+" <small> Com DDD</small>:</label><input type='text' name='"+nome+"' class='tel-masked' /></p>";
+        }else if(tipo == "Mensagem" || tipo == "Mensagem"){
           builder = "<p><label>"+nome+":</label><textarea name='"+nome+"' class='field-required' ></textarea></p>";
-        }else if(tipo == "Email"){
-          builder = "<p><label>"+nome+":</label><input type='text' name='"+nome+"' class='field-required email-masked' /></p>";
+        }else if(tipo == "Email" || tipo == "email"){
+          builder = "<p><label>"+nome+":</label><input type='text' name='"+nome+"' id='email' class='field-required email-masked' /></p><p><label>Confirmar e-mail:</label><input type='text' name='confirmacao' id='confirmar' class='field-required email-masked' /></p><div id='repita'></div>";
+        }else if(tipo == "Nome" || tipo == "nome"){
+          builder = "<p><label>Nome Completo:</label><input type='text' name='"+nome+"' class='field-required' /></p>";
+        }else{
+          builder = "<p><label>"+nome+":</label><input type='text' name='"+nome+"' class='field-required' /></p>";
         }
         form.append(builder);
       });
@@ -47,32 +49,25 @@
       form.append(builder);
     }
   }
-
   // *** Função usada para apresentar o modal!
   function chamar_modal(modal,dados,overlay){
-    if(document.cookie.indexOf(dados.cookie) >= 0) return false;
-
+    if(dados.cookie != "" || typeof dados.cookie != "undefined"){
+      if(document.cookie.indexOf(dados.cookie)) return false;
+    }
     // Se o metodo for quando o usuário entra na página
     if(dados.chamada == "by_instant"){
       overlay.css("display","block");
-      setTimeout(function(){modal.css("transform","rotateZ(-20deg)");},100);
-      setTimeout(function(){modal.css("transform","rotateZ(20deg)");},400);
-      setTimeout(function(){modal.css("transform","rotateZ(0deg)");},800);
       modal.addClass("show");
 
       // Coloca o cookie
       document.cookie = dados.cookie+"=set;expires=Thu, 01 Jan 2017 00:00:00 GMT";
     }
-
     // Se o metodo for quando o usuário estiver um certo tempo na página
     else if(dados.chamada == "by_time"){
       // Pega o tempo que foi colocado no admin e multiplica por 1000 (milsegundos)
       var time = (dados.tempo) * 1000;
       setTimeout(function(){
         overlay.css("display","block");
-        setTimeout(function(){modal.css("transform","rotateZ(-20deg)");},100);
-        setTimeout(function(){modal.css("transform","rotateZ(20deg)");},400);
-        setTimeout(function(){modal.css("transform","rotateZ(0deg)");},800);
         modal.addClass("show");
 
         // Coloca o cookie
@@ -104,20 +99,22 @@
     var close = $("#callBack_close");
     // Busca pelo modal
     var dados;
+    var pagina = window.location.pathname;
     $.ajax({
       url:ajaxurl,
       method:"GET",
       data:{
-        action:"getmodal"
+        action:"getmodal",
+        pagina:pagina
       }
     }).done(function(data){
       data = JSON.parse(data);
       dados = data;
-        // Gera o Modal!
-        gerar_modal(callBack_window,data);
+      // Gera o Modal!
+      gerar_modal(callBack_window,data);
 
-        // Metodo de chamar o modal
-        chamar_modal(callBack_window,data,callBack);
+      // Metodo de chamar o modal
+      chamar_modal(callBack_window,data,callBack);
     });
 
     // Botão de fechar!
@@ -148,6 +145,28 @@
         if(self.val() == ""){
           self.addClass("input-modal-error").focus;
           return false;
+        }else if(self.hasClass("email-masked")){
+          var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          if(!regex.test(self.val())){
+            self.addClass("input-modal-error").focus;
+            return false;
+          }else{
+            self.removeClass("input-modal-error");
+            var name = self.attr("name");
+            var value = self.val();
+            array.push(name+":"+value);
+          }
+          if(self.prop("name") == "confirmacao"){
+            var email_value = form.find("#email").val();
+            if(self.val() != email_value){
+              self.addClass("input-modal-error").focus;
+              return false;
+            }
+            self.removeClass("input-modal-error");
+            var name = self.attr("name");
+            var value = self.val();
+            array.push(name+":"+value);
+          }
         }else{
           self.removeClass("input-modal-error");
           var name = self.attr("name");
@@ -155,20 +174,33 @@
           array.push(name+":"+value);
         }
       });
+      // Telefone
+      var field = form.find("p.telefone");
+      array.push("Telefone"+":"+field.find("input[type='text']").val());
+
       if($(".input-modal-error").length > 0) return false;
       var id = $("#data-id").text();
       // Envia os dados se esviterem ok!
       $.ajax({
-        url: ajaxurl,
-        method: "POST",
+        url:ajaxurl,
+        method:"POST",
         data:{
           action:"modal_envia_dados_form",
           dados:array,
           id:id
         }
       }).done(function(data){
-        alert("Agradecemos o seu interesse e em breve um de nossos consultores educacionais entrará em contato!");
-        callBack.remove();
+        var json = JSON.parse(data);
+        var msg = "";
+        if(json.msg == "Dados enviados!"){
+          msg = "Agradecemos o seu interesse e em breve um de nossos consultores educacionais entrará em contato!";
+          alert(msg);
+          $("#callBack_close").trigger("click");
+        }else{
+          msg = "Houve um erro!";
+          alert(msg);
+          console.log(json);
+        }
       });
     });
 

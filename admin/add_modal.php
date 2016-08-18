@@ -13,6 +13,10 @@
           <!-- <option value="Video"> Video </option> -->
         </select>
       </p>
+      <p>
+        <label>Para qual página? <small>(Se for mais de uma, só separar por ";")</small></label>
+        <input type="text" name="pagina" placeholder="Para a home, digite '/'" />
+      </p>
     </div>
     <div class="body-left ">
       <p>
@@ -20,8 +24,8 @@
         <input type="text" name="nome" class="required" />
       </p>
       <p>
-        <label> Cookie: </label>
-        <input type="text" name="cookie" class="required" />
+        <label> Cookie: <small> (opcional) </small> </label>
+        <input type="text" name="cookie" />
       </p>
       <p>
         <label> <i class="fa fa-calendar-check-o"></i> Data Inicio: </label>
@@ -105,9 +109,11 @@
     <label> Tipo de campo: </label>
     <select name="input_type">
       <option value=""> Selecione um tipo </option>
-      <option value="Texto"> Texto </option>
-      <option value="Telefone"> Telefone </option>
-      <option value="Mensagem"> Mensagem </option>
+      <option value="nome"> Nome </option>
+      <option value="email"> Email </option>
+      <option value="telefone"> Telefone </option>
+      <option value="mensagem"> Mensagem </option>
+      <option value="curso"> Curso </option>
     </select>
     <input id="new_field_send" type="submit" value="Criar Campo">
   </form>

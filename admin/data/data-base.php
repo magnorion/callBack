@@ -19,6 +19,7 @@
       texto VARCHAR(900),
       chamada VARCHAR(10),
       tempo VARCHAR(10),
+      pagina VARCHAR(100),
       data_criado TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )";
     $create_table = $conn->query($sql);

@@ -1,4 +1,4 @@
 node_modules
 .sass-cache
 assets/vendor/jquery
-admin/assets/vendor
+admin/assets/vendor/

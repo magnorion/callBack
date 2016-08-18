@@ -1,8 +1,9 @@
 <?php
   $conn = $this->conn;
   $table_name = $this->table_name;
+  $pagina = $_GET['pagina'];
 
-  $search = $conn->query("SELECT * FROM $table_name LIMIT 1");
+  $search = $conn->query("SELECT * FROM $table_name WHERE pagina = '$pagina' OR pagina LIKE '%$pagina;%' OR pagina LIKE '%;$pagina%' OR pagina LIKE '%;$pagina;%' LIMIT 1");
   if($search->num_rows > 0){
     $data = $search->fetch_array();
     $c_cookie = $data['cookie'];

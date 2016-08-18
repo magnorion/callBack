@@ -3,7 +3,7 @@
   $table_name = "callback_form";
   $id = $_GET['dados'];
 
-  $search = $conn->query("SELECT * FROM $table_name WHERE modal_id = $id");
+  $search = $conn->query("SELECT * FROM $table_name WHERE modal_id = '$id' GROUP BY email");
   $counter = $search->num_rows;
 
   if($counter < 1){
@@ -18,7 +18,7 @@
     $nome = $dado['nome'];
 
     ### Nome do arquivo ---
-    $title = $dado['cookie']."_".date("Ymd");
+    $title = $dado['nome']."_".date("Ymd");
     $file = __DIR__."/leads/".$title.".csv";
     $file_url = $title.".csv";
 
