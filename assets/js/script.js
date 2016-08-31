@@ -53,8 +53,7 @@
   }
   // *** Função usada para apresentar o modal!
   function chamar_modal(modal,dados,overlay){
-    console.log(dados.cookie);
-    if(dados.cookie != "" || typeof dados.cookie != "undefined"){
+    if(dados.cookie != ""){
       if(document.cookie.indexOf(dados.cookie) != "-1") return false;
     }
     // Se o metodo for quando o usuário entra na página
