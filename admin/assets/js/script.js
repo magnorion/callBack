@@ -200,8 +200,10 @@
           youtube: $("input[name='youtube']").val(),
           texto: CKEDITOR.instances.editor.getData(),
           chamada: $("select[name='chamada']").val(),
+          pagina: $("input[name='pagina']").val(),
           tempo: $("input[name='tempo']").val()
         };
+
         $.ajax({
           url:ajaxurl,
           method:"POST",
@@ -209,7 +211,7 @@
             action: "create_modal",
             dados: dados
           }
-        }).success(function(data){
+        }).success(function(data){          
           var json = JSON.parse(data);
           if(json.msg == "Dados enviados!"){
             alert("Modal Criado!");

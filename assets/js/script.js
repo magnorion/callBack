@@ -6,7 +6,7 @@
     var modal_width = dados.largura;
     var screen_width = $(document).width();
     var center = ((screen_width/50) / 2) - 5;
-
+    console.log(center);
 
     // CSS
     var bg = "#fff";
@@ -17,7 +17,9 @@
       "min-height": dados.altura,
       background:bg,
       "background-size": "cover",
-      "margin":"5% auto"
+      "margin":"5% auto",
+      "left":"0%",
+      "transform": "rotateZ(0deg)"
     });
     modal.find("#callBack_Body").append(dados.texto);
 
@@ -51,8 +53,9 @@
   }
   // *** Função usada para apresentar o modal!
   function chamar_modal(modal,dados,overlay){
+    console.log(dados.cookie);
     if(dados.cookie != "" || typeof dados.cookie != "undefined"){
-      if(document.cookie.indexOf(dados.cookie)) return false;
+      if(document.cookie.indexOf(dados.cookie) != "-1") return false;
     }
     // Se o metodo for quando o usuário entra na página
     if(dados.chamada == "by_instant"){
@@ -118,24 +121,14 @@
     });
 
     // Botão de fechar!
-    close.on("click",function(){
+    close.live("click",function(){
       callBack.remove();
     });
 
     // *** Validação e Envio de Dados (se houver formulário)
 
-    // Masks!!!
-    $("#callBack_window").find("form").on("focus",".tel-masked",function(){
-      $(this).mask('(00) 0000-0000r',{
-        translation:{
-          "r":{
-            pattern: /[0-9]/, optional: true
-          }
-        }
-      });
-    });
     // Validação
-    $("#callBack_window").find("form").on("click","button",function(e){
+    $("#callBack_window").find("form button").live("click",function(e){
       e.preventDefault();
       var array = [];
       var form = $("#callBack_window").find("form");

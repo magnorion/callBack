@@ -3,8 +3,8 @@
     * Plugin Name: CallBack
     * Description: Plugin para construção de modais.
     * Version: 1.0
-    * Author: Magnorion
-    * Author Uri: http://github.com/magnorion/
+    * Author: Cruzeiro do Sul Educacional
+    * Author Uri: http://cruzeirodosuleducacional.com.br
   */
 
   class CallBack{
@@ -12,15 +12,14 @@
     public $table_name;
     function __construct(){
       if(!is_admin()){
-
         ### Hook para carregar o plugin no site
-        add_action("wp_footer",array($this,"plugin_build"));
+        add_action("wp_head",array($this,"plugin_build"));
 
         ### Chama a variavel ajaxurl
-        add_action("wp_footer",array($this,"ajaxurl"));
+        add_action("wp_head",array($this,"ajaxurl"));
 
         ### Hook para carregar todos os arquivos
-        add_action("wp_footer",array($this,"plugin_assets"));
+        add_action("wp_enqueue_scripts",array($this,"plugin_assets"));
       }else{
         ### Monta o menu no admin
         add_action("admin_menu",array($this,"plugin_menu"));
