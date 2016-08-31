@@ -3,8 +3,8 @@
     * Plugin Name: CallBack
     * Description: Plugin para construção de modais.
     * Version: 1.0
-    * Author: Cruzeiro do Sul Educacional
-    * Author Uri: http://cruzeirodosuleducacional.com.br
+    * Author: Magnorion
+    * Author Uri: https://github.com/magnorion/
   */
 
   class CallBack{
